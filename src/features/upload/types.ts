@@ -7,4 +7,5 @@ export type UploadedFile = {
   createdAt: string
   shareUrl: string
   objectUrl: string
+  storagePath?: string
 }

@@ -6,7 +6,7 @@ export function DashboardPage() {
       <section className="page-header">
         <p className="eyebrow">MVP workspace</p>
         <h1>Upload anything and get a shareable link</h1>
-        <p>Authentication is connected to the live API. File upload is isolated behind a mock adapter until backend file endpoints are available.</p>
+        <p>Authentication and file upload are connected to the live API. Choose, drop, or paste one or more files to create public links.</p>
       </section>
 
       <UploadDropzone />
