@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { Clipboard, FilePlus2, LinkIcon, QrCode } from 'lucide-react'
-import QRCode from 'qrcode'
+import { Clipboard, FilePlus2 } from 'lucide-react'
 import { getApiErrorMessage } from '../../api/client'
 import { uploadFiles } from './uploadApi'
 import { readMockUploads, saveMockUploads } from './uploadStore'
@@ -36,7 +35,6 @@ export function UploadDropzone() {
   const [uploads, setUploads] = useState<UploadedFile[]>(() => readMockUploads())
   const [error, setError] = useState<string | null>(null)
   const [isUploading, setIsUploading] = useState(false)
-  const [qrByCode, setQrByCode] = useState<Record<string, string>>({})
 
   const sessionSize = useMemo(() => uploads.reduce((total, file) => total + file.size, 0), [uploads])
 
@@ -65,7 +63,6 @@ export function UploadDropzone() {
         size: file.size,
         type: file.mime_type || 'application/octet-stream',
         createdAt: file.created_at,
-        shareUrl: file.url,
         objectUrl: file.url,
         storagePath: file.path,
       }))
@@ -122,11 +119,6 @@ export function UploadDropzone() {
     }
   }, [acceptFiles])
 
-  async function createQr(file: UploadedFile) {
-    const qr = await QRCode.toDataURL(file.shareUrl, { width: 180, margin: 1 })
-    setQrByCode((current) => ({ ...current, [file.code]: qr }))
-  }
-
   return (
     <section className="upload-grid">
       <div
@@ -180,26 +172,17 @@ export function UploadDropzone() {
 
       <div className="upload-results">
         {uploads.length === 0 ? (
-          <div className="empty-state">Uploaded files will appear here with public share links.</div>
+          <div className="empty-state">Uploaded files will appear here. Open My Page to create public share links.</div>
         ) : (
           uploads.map((file) => (
             <article className="file-row" key={file.id}>
               <div>
                 <strong>{file.name}</strong>
-                <span>{file.type} · {formatBytes(file.size)}</span>
+                <span>{file.type} | {formatBytes(file.size)}</span>
               </div>
               <div className="file-actions">
-                <button type="button" onClick={() => navigator.clipboard.writeText(file.shareUrl)}>
-                  <LinkIcon size={16} />
-                  Copy
-                </button>
-                <a href={file.shareUrl} target="_blank" rel="noreferrer">Open</a>
-                <button type="button" onClick={() => createQr(file)}>
-                  <QrCode size={16} />
-                  QR
-                </button>
+                <a href="/my-page">Manage link</a>
               </div>
-              {qrByCode[file.code] ? <img className="qr-image" src={qrByCode[file.code]} alt={`QR code for ${file.name}`} /> : null}
             </article>
           ))
         )}

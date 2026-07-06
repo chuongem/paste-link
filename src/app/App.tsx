@@ -4,6 +4,7 @@ import { ProtectedRoute } from '../components/ProtectedRoute'
 import { AiPage } from '../pages/AiPage'
 import { DashboardPage } from '../pages/DashboardPage'
 import { LoginPage } from '../pages/LoginPage'
+import { MyPage } from '../pages/MyPage'
 import { PublicFilePage } from '../pages/PublicFilePage'
 import { RegisterPage } from '../pages/RegisterPage'
 import { WalletPage } from '../pages/WalletPage'
@@ -19,6 +20,7 @@ export function App() {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppShell />}>
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/my-page" element={<MyPage />} />
           <Route path="/ai" element={<AiPage />} />
           <Route path="/wallet" element={<WalletPage />} />
         </Route>

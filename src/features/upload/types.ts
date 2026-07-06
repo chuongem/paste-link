@@ -5,7 +5,9 @@ export type UploadedFile = {
   size: number
   type: string
   createdAt: string
-  shareUrl: string
+  shareUrl?: string
+  sharedAt?: string
+  isShareEnabled?: boolean
   objectUrl: string
   storagePath?: string
 }

@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from 'react-router-dom'
-import { LogOut, UploadCloud, WalletCards, WandSparkles } from 'lucide-react'
+import { Files, LogOut, UploadCloud, WalletCards, WandSparkles } from 'lucide-react'
 import { useAuth } from '../features/auth/AuthProvider'
 
 export function AppShell() {
@@ -20,6 +20,10 @@ export function AppShell() {
           <NavLink to="/dashboard">
             <UploadCloud size={18} />
             Upload
+          </NavLink>
+          <NavLink to="/my-page">
+            <Files size={18} />
+            My Page
           </NavLink>
           <NavLink to="/ai">
             <WandSparkles size={18} />
